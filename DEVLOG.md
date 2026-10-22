@@ -13,3 +13,4 @@ One line per piece. UNVERIFIED = written against the host source but not run ins
 - Panel-off text now says what to do when no FIBO model is loaded yet.
 - Result: model, text encoder and VAE found by themselves; Recommended settings gives Euler, Simple, 4 steps, CFG 1, 1024x1024; edit runs from the web page in 17 s.
 - Web page tests on a fresh Forge (RTX 5090): 2 pictures + prompt, JSON caption, batch size 2, n_iter 2 pass. Wrong VAE in the top bar: refusal shown in the page, extension stays on; clearing it and generating again works. Not tested: mask in the page, model switch and back, low VRAM.
+- Mask painted in the web page (Inpaint tab) works. Model switch: other model picked and used, then FIBO picked again; extension stays quiet for other models and finds its text encoder and VAE again. Low VRAM not tested.
