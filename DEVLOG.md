@@ -1,0 +1,14 @@
+# DEVLOG - sd-forge-fibo-edit (Stable Yogi)
+
+One line per piece. UNVERIFIED = written against the host source but not run inside Forge.
+
+- 2026-10-22 piece 1: pure helpers (prompt, sizes, schedule, latents, mask, rope, taps, time sinus); tests\test_helpers.py 24/24 pass on CPU (F6..F16).
+- 2026-10-22 piece 2: DiT (fibo_edit\dit.py) + npz loader (weights.py); tests\test_dit.py 6/6 pass; max abs err F1 2.1e-6, F2 3.8e-6, F3 2.9e-6, F5 1.8e-6; F4 split FFN diff 0.0.
+- 2026-10-22 piece 3: GGUF header reader (gguf_names.py) + fingerprint/config (weights.py); tests\test_detect.py 7/7 pass on the real Q8 file: 634 tensors (368 F32, 199 Q8_0, 67 BF16), arch field "flux" (ignored), every name and shape matches FiboEditDiT exactly.
+- 2026-10-22 piece 4: host integration (host_engine, host_dit, host_text, hooks, job, files, pictures, repo\model_index.json, scripts\fibo_register.py, scripts\fibo_edit_panel.py); run_all.py 82/82 pass (new: test_pictures 19, test_files 7, test_host_text 10, test_hooks 14). CPU checks inside the real host modules (`--cpu`, no GPU, no UI): tests\host_guess_check.py = registration runs, the host guesses FiboEditBase from the real Q8 header, picks FiboEditEngine, loads the tokenizer through the redirected folder (image pad id 151655 = ours); tests\host_build_check.py = the tiny DiT built through the host Krea2 branch with our class swapped in (forge ops, f32, non-strict load, 0 keys missing), host attention kernel active, F1 2.0e-6, F2 3.9e-6, F3 3.5e-6, F5 1.8e-6. The loader wrapper step cannot import modules.sd_models outside a running Forge (circular import), so it is only checked by unit tests. UNVERIFIED (needs GPU / live Forge): GGUF build of plain Parameters (RMS weights, cross_attn_gate, latent_queries) under forge GGUF ops; bf16 storage; mean-posterior VAE patch; vision path, mrope and deepstack hooks with the real Qwen3-VL; can_concat patch in a real CFG>1 pass; shift timing (process_before_every_sampling after set_shift); prompt-cache clear; VAE config redirect; panel UI and the recommended-settings button (JS wiring); memory_usage_factor 20.0 (guessed); bare-file module auto-pick in the live loader; batch size above 1.
+- 2026-10-22 piece 5: README.md (what it is, install, files, use, settings, errors, tests, licence line "Non-commercial: CC BY-NC 4.0", author Stable Yogi); no code change, run_all.py re-run after it.
+
+## 2026-10-23
+- Fresh install test (new upstream Forge Neo, default settings, the three files copied into its models folders): found that newer hosts call set_shift with width and height. set_shift now accepts extra arguments.
+- Panel-off text now says what to do when no FIBO model is loaded yet.
+- Result: model, text encoder and VAE found by themselves; Recommended settings gives Euler, Simple, 4 steps, CFG 1, 1024x1024; edit runs from the web page in 17 s.

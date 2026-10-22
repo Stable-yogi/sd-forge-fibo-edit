@@ -1,0 +1,19 @@
+{
+  "_class_name": "FiboEditPipeline",
+  "transformer": [
+    "diffusers",
+    "FiboEditTransformer2DModel"
+  ],
+  "text_encoder": [
+    "transformers",
+    "Qwen3VLModel"
+  ],
+  "tokenizer": [
+    "transformers",
+    "Qwen2Tokenizer"
+  ],
+  "vae": [
+    "diffusers",
+    "AutoencoderKLFlux2"
+  ]
+}
