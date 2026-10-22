@@ -12,3 +12,4 @@ One line per piece. UNVERIFIED = written against the host source but not run ins
 - Fresh install test (new upstream Forge Neo, default settings, the three files copied into its models folders): found that newer hosts call set_shift with width and height. set_shift now accepts extra arguments.
 - Panel-off text now says what to do when no FIBO model is loaded yet.
 - Result: model, text encoder and VAE found by themselves; Recommended settings gives Euler, Simple, 4 steps, CFG 1, 1024x1024; edit runs from the web page in 17 s.
+- Web page tests on a fresh Forge (RTX 5090): 2 pictures + prompt, JSON caption, batch size 2, n_iter 2 pass. Wrong VAE in the top bar: refusal shown in the page, extension stays on; clearing it and generating again works. Not tested: mask in the page, model switch and back, low VRAM.
