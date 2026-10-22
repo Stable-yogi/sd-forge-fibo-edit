@@ -44,6 +44,7 @@ The "Check" button shows the panel status: ready, wrong model, or the last messa
 - **CFG**: the model is made for CFG 1. A higher CFG works, but each step then runs twice and is slower.
 - **Mask**: draw a mask on picture 1 (img2img inpaint) to mark the area to change. A mask works only with exactly one picture.
   "Inverted mask" is honoured. The extension does not blend or paste back; the model redraws the whole picture.
+  Because the whole picture is redrawn, areas outside the mask can change a little (small drift in detail and colour).
 - **Denoise**: always 1.0. The extension sets it, because the model starts from pure noise.
 
 ## When something is wrong
